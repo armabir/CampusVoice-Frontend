@@ -7,6 +7,7 @@ import AuthPage from './components/AuthPage';
 import Dashboard from './components/Dashboard';
 import AdminDashboard from './components/AdminDashboard';
 import SubmitComplaint from './components/SubmitComplaint'; // 👈 1. Import the new component
+import PublicFeed from './components/PublicFeed';
 
 function App() {
   return (
@@ -21,7 +22,9 @@ function App() {
         
         {/* 👈 2. Add the Submit Complaint route */}
         <Route path="/submit" element={<SubmitComplaint />} /> 
-        <Route element="{<AdminDashboard" path="/admin-dashboard"/>
+        <Route path="/admin-dashboard" element={<AdminDashboard />} />
+
+        <Route path="/feed" element={<PublicFeed />} />
         
         {/* Catch-all for 404s - redirects back to home */}
         <Route path="*" element={<Navigate to="/" replace />} />
