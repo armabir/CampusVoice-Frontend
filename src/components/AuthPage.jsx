@@ -27,11 +27,48 @@ const AuthPage = () => {
     e.preventDefault();
     console.log("Attempting login for:", formData.email);
 
+    const email = formData.email.trim();
+
+    // ==========================================
+    // 🪄 DEMO MAGIC: HARDCODED ROUTES
+    // ==========================================
+
+    // 1. Admin Bypass check
+    if (email.endsWith('.admin@seu.edu.bd')) {
+      console.log("Demo Admin Login!");
+      localStorage.setItem('campusVoiceUser', JSON.stringify({
+        role: 'ADMIN',
+        name: 'System Administrator',
+        email: email
+      }));
+      navigate('/admin-dashboard'); // We will build this next!
+      return;
+    }
+
+// 2. Student Bypass check (Extracts the digits as the ID)
+    const studentRegex = /^(\d+)@seu\.edu\.bd$/;
+    const match = email.match(studentRegex);
+    
+    if (match) {
+      const studentId = match[1]; // Automatically grabs your ID from the email!
+      console.log("Demo Student Login!");
+      
+      localStorage.setItem('campusVoiceUser', JSON.stringify({
+        role: 'STUDENT',
+        name: 'ARM ABIR HASAN', // 👈 Boom! Your name is locked in.
+        id: studentId, 
+        email: email
+      }));
+      
+      navigate('/dashboard');
+      return;
+    }
+    // ==========================================
+
+    // ... The rest of your real backend fetch logic can stay here as a fallback!
     try {
-      // Updated to match port 9098
       const response = await fetch(`https://campusvoice-backend-ppgp.onrender.com/api/users/search?email=${formData.email}`);
       
-      // Enhanced Response Parsing
       if (!response.ok) {
         const errorText = await response.text();
         alert(`Login failed: ${errorText || "User not found!"}`);
@@ -40,23 +77,16 @@ const AuthPage = () => {
 
       const user = await response.json();
       
-      // Basic client-side password check
       if (user.password === formData.password) {
-        console.log("Login successful!", user);
-        alert(`Welcome back, ${user.name}!`);
+        // Save real user to local storage too!
+        localStorage.setItem('campusVoiceUser', JSON.stringify(user));
         navigate('/dashboard'); 
       } else {
         alert("Incorrect password!");
       }
       
     } catch (error) {
-      // Enhanced Error Handling
-      console.error("Login Error:", error.message);
-      if (error.message === "Failed to fetch" || error.message.includes("Network Error")) {
-        alert("Network Error: Cannot connect to the server. Please check if your backend is running or verify your CORS settings.");
-      } else {
-        alert("An unexpected error occurred during login.");
-      }
+      alert("Network Error: Cannot connect to the server.");
     }
   };
 

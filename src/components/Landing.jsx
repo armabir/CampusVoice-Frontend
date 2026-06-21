@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { 
   Megaphone, Search, Bell, Menu, Plus, 
   ThumbsUp, MessageSquare, Clock, CheckCircle, 
@@ -52,10 +53,12 @@ const BackgroundOrbs = () => (
   </div>
 );
 
-// --- Navbar ---
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  
+  // 👉 1. Initialize the navigate function
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -86,9 +89,14 @@ const Navbar = () => {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center space-x-4">
-            <button className="text-sm font-semibold text-slate-400 hover:text-white transition-colors">
+            {/* 👉 2. Add the onClick handler to the Login button */}
+            <button 
+              onClick={() => navigate('/auth')} 
+              className="text-sm font-semibold text-slate-400 hover:text-white transition-colors cursor-pointer"
+            >
               Login
             </button>
+            
             <button className="px-5 py-2.5 rounded-xl text-sm font-bold text-[#0B0F19] bg-white hover:bg-slate-200 transition-all shadow-md hover:shadow-xl hover:-translate-y-0.5">
               Submit Complaint
             </button>

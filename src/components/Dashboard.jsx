@@ -25,11 +25,11 @@ const Dashboard = () => {
   }, []);
 
   const handleLogout = () => {
-    // Clear tokens/session logic here
+    // Navigate back to login
     navigate('/auth');
   };
 
-  // Helper for dynamic status badge colors (handles backend Enums like IN_PROGRESS)
+  // Helper for dynamic status badge colors
   const getStatusStyle = (status) => {
     const normalized = status?.toUpperCase().replace('_', ' ');
     switch (normalized) {
@@ -65,14 +65,17 @@ const Dashboard = () => {
             <i className="fas fa-user text-white"></i>
           </div>
           <div>
-            <h1 className="font-bold text-lg leading-tight">Student Portal</h1>
-            <p className="text-xs text-zinc-400 uppercase tracking-wider">Dashboard</p>
+            {/* 🎯 HARDCODED DEMO USER DATA */}
+            <h1 className="font-bold text-lg leading-tight text-white">ARM ABIR HASAN</h1>
+            <p className="text-xs text-orange-400 font-semibold tracking-wider">
+              ID: 2023100000176 <span className="text-zinc-500 mx-1">•</span> Student
+            </p>
           </div>
         </div>
         
         <button 
           onClick={handleLogout}
-          className="text-zinc-400 hover:text-orange-500 transition-colors flex items-center space-x-2"
+          className="text-zinc-400 hover:text-orange-500 transition-colors flex items-center space-x-2 cursor-pointer"
         >
           <span className="hidden md:inline text-sm font-medium">Logout</span>
           <i className="fas fa-sign-out-alt"></i>
@@ -90,7 +93,7 @@ const Dashboard = () => {
           </div>
           <button 
             onClick={() => navigate('/submit')}
-            className="w-full md:w-auto bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-xl shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-[0_0_25px_rgba(249,115,22,0.5)] transition-all flex items-center justify-center space-x-2 transform hover:-translate-y-0.5"
+            className="w-full md:w-auto bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-6 rounded-xl shadow-[0_0_20px_rgba(249,115,22,0.3)] hover:shadow-[0_0_25px_rgba(249,115,22,0.5)] transition-all flex items-center justify-center space-x-2 transform hover:-translate-y-0.5 cursor-pointer"
           >
             <i className="fas fa-plus"></i>
             <span>Submit New Complaint</span>
